@@ -27,6 +27,7 @@ from dagster_dg.utils import (
     exit_with_error,
     generate_missing_plugin_object_error_message,
 )
+from dagster_dg.utils.cli import workspace_entry_for_project
 from dagster_dg.utils.editor import (
     install_or_update_yaml_schema_extension,
     recommend_yaml_extension,
@@ -220,7 +221,7 @@ def create_temp_workspace_file(dg_context: DgContext) -> Iterator[str]:
     with NamedTemporaryFile(mode="w+", delete=True) as temp_workspace_file:
         entries = []
         if dg_context.is_project:
-            entries.append(_workspace_entry_for_project(dg_context))
+            entries.append(workspace_entry_for_project(dg_context))
         elif dg_context.is_workspace:
             for spec in dg_context.project_specs:
                 project_root = dg_context.root_path / spec.path
@@ -235,7 +236,7 @@ def create_temp_workspace_file(dg_context: DgContext) -> Iterator[str]:
                         f"Warning: Dagster version {project_context.dagster_version} is less than the minimum required version for .env file environment "
                         f"variable injection ({MIN_ENV_VAR_INJECTION_VERSION}). Environment variables will not be injected for location {project_context.code_location_name}."
                     )
-                entries.append(_workspace_entry_for_project(project_context))
+                entries.append(workspace_entry_for_project(project_context))
         yaml.dump({"load_from": entries}, temp_workspace_file)
         temp_workspace_file.flush()
         yield temp_workspace_file.name

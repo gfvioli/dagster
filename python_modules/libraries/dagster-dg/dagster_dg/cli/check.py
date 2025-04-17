@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 import click
+from click.testing import CliRunner
 
 from dagster_dg.check import check_yaml as check_yaml_fn
 from dagster_dg.cli.dev import format_forwarded_option
@@ -171,14 +172,23 @@ def check_definitions_command(
                 overall_check_result = overall_check_result and check_result
             if not overall_check_result:
                 click.get_current_context().exit(1)
+
         dg_context.log.warning(f"Using {cmd_location}")
         if workspace_file:  # only non-None deployment context
             cmd.extend(["--workspace", workspace_file])
 
         dg_context.log.warning(" ".join(cmd))
+        if dg_context.is_project and dg_context.get_executable("python") == Path(sys.executable):
+            from dagster._cli import cli
 
-        result = subprocess.run(cmd, check=False)
-        if result.returncode != 0:
-            sys.exit(result.returncode)
+            cmd.pop(0)  # remove "dagster"
+            result = CliRunner().invoke(cli, cmd)
+            exit_code = result.exit_code
+        else:
+            result = subprocess.run(cmd, check=False)
+            exit_code = result.returncode
+
+        if exit_code != 0:
+            sys.exit(exit_code)
 
     click.echo("All definitions loaded successfully.")

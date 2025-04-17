@@ -213,14 +213,11 @@ def isolated_example_project_foo_bar(
     package_layout: PackageLayoutType = "src",
     use_editable_dagster: bool = True,
     dagster_version: Optional[Union[str, Version]] = None,
-    python_environment: DgProjectPythonEnvironmentFlag = "uv_managed",
+    python_environment: DgProjectPythonEnvironmentFlag = "active",
     # Only works when python_environment is "active"
-    skip_venv: bool = False,
+    skip_venv: bool = True,
 ) -> Iterator[Path]:
     """Scaffold a project named foo_bar in an isolated filesystem.
-
-    Note that this always creates a project using a `uv_managed` Python environment. This is much
-    more testing friendly since uv management means we don't need to worry about venv activation.
 
     Args:
         runner: The runner to use for invoking commands.

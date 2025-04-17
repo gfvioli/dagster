@@ -74,7 +74,6 @@ def test_implicit_yaml_check_from_dg_check_defs() -> None:
         with pushd(str(tmpdir)):
             result = runner.invoke("check", "defs")
             assert result.exit_code != 0, str(result.stdout)
-
             assert BASIC_INVALID_VALUE.check_error_msg and BASIC_MISSING_VALUE.check_error_msg
             BASIC_INVALID_VALUE.check_error_msg(str(result.stdout))
             BASIC_MISSING_VALUE.check_error_msg(str(result.stdout))

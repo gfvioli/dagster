@@ -6,6 +6,7 @@ import re
 import shlex
 import shutil
 import subprocess
+import sys
 import textwrap
 from collections.abc import Iterable, Mapping
 from functools import cached_property
@@ -15,6 +16,7 @@ from typing import Any, Final, Optional, Union
 import tomlkit
 import tomlkit.items
 import yaml
+from click.testing import CliRunner
 from dagster_shared.libraries import (
     DagsterPyPiAccessError,
     get_published_pypi_versions,
@@ -649,10 +651,19 @@ class DgContext:
     ) -> str:
         _validate_dagster_dg_and_dagster_version_compatibility(self)
         executable_path = self.get_executable("dagster-components")
+        python_path = self.get_executable("python")
         if self.use_dg_managed_environment:
             # uv run will resolve to the same dagster-components as we resolve above
             command = ["uv", "run", "dagster-components", *command]
             env = strip_activated_venv_from_env_vars(os.environ)
+        elif str(python_path) == sys.executable and self.is_project:
+            # targeting our current environment
+            from dagster.components.cli import cli
+
+            sys.path.append(str(self.get_path_for_local_module(self.root_module_name).parent))
+            result = CliRunner().invoke(cli, command)
+            sys.path.pop()
+            return result.stdout
         else:
             command = [str(executable_path), *command]
             env = os.environ

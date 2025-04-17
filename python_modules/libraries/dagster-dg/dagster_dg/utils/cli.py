@@ -12,19 +12,21 @@ def temp_workspace_file(dg_context: DgContext) -> Iterator[str]:
     with NamedTemporaryFile(mode="w+", delete=True) as temp_workspace_file:
         entries = []
         if dg_context.is_project:
-            entries.append(_workspace_entry_for_project(dg_context))
+            entries.append(workspace_entry_for_project(dg_context))
         elif dg_context.is_workspace:
             for project_spec in dg_context.project_specs:
                 project_context: DgContext = dg_context.with_root_path(project_spec.path)
-                entries.append(_workspace_entry_for_project(project_context))
+                entries.append(workspace_entry_for_project(project_context))
         yaml.dump({"load_from": entries}, temp_workspace_file)
         temp_workspace_file.flush()
         yield temp_workspace_file.name
 
 
-def _workspace_entry_for_project(dg_context: DgContext) -> dict[str, dict[str, str]]:
+def workspace_entry_for_project(dg_context: DgContext) -> dict[str, dict[str, str]]:
     entry = {
-        "working_directory": str(dg_context.root_path),
+        "working_directory": str(
+            dg_context.get_path_for_local_module(dg_context.root_module_name).parent
+        ),
         "module_name": str(dg_context.code_location_target_module_name),
         "location_name": dg_context.code_location_name,
     }
