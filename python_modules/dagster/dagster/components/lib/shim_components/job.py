@@ -21,11 +21,6 @@ class JobScaffolder(ShimScaffolder):
 
             @dg.job
             def {filename}():
-                \"\"\"
-                A job that orchestrates a series of operations.
-                
-                Replace this docstring with a description of your job.
-                \"\"\"
                 pass
             """
         )
