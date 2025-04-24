@@ -442,6 +442,7 @@ export type AssetCheckAutomationListQuery = {
             numTrue: number;
             isPartitioned: boolean;
             childUniqueIds: Array<string>;
+            operatorType: string;
             entityKey:
               | {__typename: 'AssetCheckhandle'}
               | {__typename: 'AssetKey'; path: Array<string>};
@@ -452,4 +453,4 @@ export type AssetCheckAutomationListQuery = {
     | null;
 };
 
-export const AssetCheckAutomationListQueryVersion = 'a48e5be6496b08558e0aa7a3f2ea98eb2a9018175c04e69bee5d51b792962328';
+export const AssetCheckAutomationListQueryVersion = '2eda5de1cb05b3ca3cb1cc519b75992531d014a2efaf6b1a1c610e54c571a48f';

@@ -70,6 +70,7 @@ const NEW_EVALUATION_NODE_FRAGMENT = gql`
     numTrue
     isPartitioned
     childUniqueIds
+    operatorType
     entityKey {
       __typename
       ... on AssetKey {
