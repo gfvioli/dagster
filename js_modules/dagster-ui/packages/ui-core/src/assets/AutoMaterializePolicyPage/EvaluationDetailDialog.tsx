@@ -389,7 +389,16 @@ const DialogContents = ({
       <div style={{flex: 1, overflowY: 'auto'}}>{body}</div>
       <div style={{flexGrow: 0}}>
         <DialogFooter topBorder left={viewAllButton}>
-          <Button onClick={onDone}>Done</Button>
+          <Button
+            onClick={(e) => {
+              if (onDone) {
+                e.stopPropagation();
+                onDone();
+              }
+            }}
+          >
+            Done
+          </Button>
         </DialogFooter>
       </div>
     </Box>
