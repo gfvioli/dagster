@@ -49,7 +49,7 @@ function useLaunchButtonCommonState({runCount, disabled}: {runCount: number; dis
   if (starting) {
     status = LaunchButtonStatus.Starting;
     forced = {
-      title: runCount === 1 ? 'Submitting run…' : `Submitting ${runCount} runs…`,
+      title: runCount === 1 ? 'Submitting run… YEEHAW' : `Submitting ${runCount} runs…`,
       disabled: true,
       icon: 'dagster-spinner',
     };
