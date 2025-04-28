@@ -17,6 +17,7 @@ import styled from 'styled-components';
 import {GET_SLIM_EVALUATIONS_QUERY} from './GetEvaluationsQuery';
 import {PartitionTagSelector} from './PartitionTagSelector';
 import {QueryfulEvaluationDetailTable} from './QueryfulEvaluationDetailTable';
+import {buildEntityKey} from './flattenEvaluations';
 import {runTableFiltersForEvaluation} from './runTableFiltersForEvaluation';
 import {EvaluationHistoryStackItem} from './types';
 import {
@@ -29,8 +30,6 @@ import {DEFAULT_TIME_FORMAT} from '../../app/time/TimestampFormat';
 import {RunsFeedTableWithFilters} from '../../runs/RunsFeedTable';
 import {TimestampDisplay} from '../../schedules/TimestampDisplay';
 import {AnchorButton} from '../../ui/AnchorButton';
-import { EntityKey } from 'shared/graphql/types';
-import { buildEntityKey } from './flattenEvaluations';
 
 export type Tab = 'evaluation' | 'runs';
 
