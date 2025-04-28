@@ -2,6 +2,16 @@
 
 import * as Types from '../../../graphql/types';
 
+export type EntityKeyFragment_AssetCheckhandle = {
+  __typename: 'AssetCheckhandle';
+  name: string;
+  assetKey: {__typename: 'AssetKey'; path: Array<string>};
+};
+
+export type EntityKeyFragment_AssetKey = {__typename: 'AssetKey'; path: Array<string>};
+
+export type EntityKeyFragment = EntityKeyFragment_AssetCheckhandle | EntityKeyFragment_AssetKey;
+
 export type SpecificPartitionAssetConditionEvaluationNodeFragment = {
   __typename: 'SpecificPartitionAssetConditionEvaluationNode';
   description: string;
@@ -156,7 +166,13 @@ export type SpecificPartitionAssetConditionEvaluationNodeFragment = {
       }
     | {__typename: 'UrlMetadataEntry'; url: string; label: string; description: string | null}
   >;
-  entityKey: {__typename: 'AssetCheckhandle'} | {__typename: 'AssetKey'; path: Array<string>};
+  entityKey:
+    | {
+        __typename: 'AssetCheckhandle';
+        name: string;
+        assetKey: {__typename: 'AssetKey'; path: Array<string>};
+      }
+    | {__typename: 'AssetKey'; path: Array<string>};
 };
 
 export type UnpartitionedAssetConditionEvaluationNodeFragment = {
@@ -167,7 +183,13 @@ export type UnpartitionedAssetConditionEvaluationNodeFragment = {
   status: Types.AssetConditionEvaluationStatus;
   uniqueId: string;
   childUniqueIds: Array<string>;
-  entityKey: {__typename: 'AssetCheckhandle'} | {__typename: 'AssetKey'; path: Array<string>};
+  entityKey:
+    | {
+        __typename: 'AssetCheckhandle';
+        name: string;
+        assetKey: {__typename: 'AssetKey'; path: Array<string>};
+      }
+    | {__typename: 'AssetKey'; path: Array<string>};
   metadataEntries: Array<
     | {
         __typename: 'AssetMetadataEntry';
@@ -327,7 +349,13 @@ export type PartitionedAssetConditionEvaluationNodeFragment = {
   uniqueId: string;
   childUniqueIds: Array<string>;
   numCandidates: number | null;
-  entityKey: {__typename: 'AssetCheckhandle'} | {__typename: 'AssetKey'; path: Array<string>};
+  entityKey:
+    | {
+        __typename: 'AssetCheckhandle';
+        name: string;
+        assetKey: {__typename: 'AssetKey'; path: Array<string>};
+      }
+    | {__typename: 'AssetKey'; path: Array<string>};
 };
 
 export type NewEvaluationNodeFragment = {
@@ -342,7 +370,13 @@ export type NewEvaluationNodeFragment = {
   isPartitioned: boolean;
   childUniqueIds: Array<string>;
   operatorType: string;
-  entityKey: {__typename: 'AssetCheckhandle'} | {__typename: 'AssetKey'; path: Array<string>};
+  entityKey:
+    | {
+        __typename: 'AssetCheckhandle';
+        name: string;
+        assetKey: {__typename: 'AssetKey'; path: Array<string>};
+      }
+    | {__typename: 'AssetKey'; path: Array<string>};
 };
 
 export type AssetConditionEvaluationRecordFragment = {
@@ -370,7 +404,11 @@ export type AssetConditionEvaluationRecordFragment = {
           childUniqueIds: Array<string>;
           numCandidates: number | null;
           entityKey:
-            | {__typename: 'AssetCheckhandle'}
+            | {
+                __typename: 'AssetCheckhandle';
+                name: string;
+                assetKey: {__typename: 'AssetKey'; path: Array<string>};
+              }
             | {__typename: 'AssetKey'; path: Array<string>};
         }
       | {
@@ -553,7 +591,11 @@ export type AssetConditionEvaluationRecordFragment = {
               }
           >;
           entityKey:
-            | {__typename: 'AssetCheckhandle'}
+            | {
+                __typename: 'AssetCheckhandle';
+                name: string;
+                assetKey: {__typename: 'AssetKey'; path: Array<string>};
+              }
             | {__typename: 'AssetKey'; path: Array<string>};
         }
       | {
@@ -565,7 +607,11 @@ export type AssetConditionEvaluationRecordFragment = {
           uniqueId: string;
           childUniqueIds: Array<string>;
           entityKey:
-            | {__typename: 'AssetCheckhandle'}
+            | {
+                __typename: 'AssetCheckhandle';
+                name: string;
+                assetKey: {__typename: 'AssetKey'; path: Array<string>};
+              }
             | {__typename: 'AssetKey'; path: Array<string>};
           metadataEntries: Array<
             | {
@@ -755,7 +801,13 @@ export type AssetConditionEvaluationRecordFragment = {
     isPartitioned: boolean;
     childUniqueIds: Array<string>;
     operatorType: string;
-    entityKey: {__typename: 'AssetCheckhandle'} | {__typename: 'AssetKey'; path: Array<string>};
+    entityKey:
+      | {
+          __typename: 'AssetCheckhandle';
+          name: string;
+          assetKey: {__typename: 'AssetKey'; path: Array<string>};
+        }
+      | {__typename: 'AssetKey'; path: Array<string>};
   }>;
 };
 
@@ -811,7 +863,11 @@ export type GetEvaluationsQuery = {
                   childUniqueIds: Array<string>;
                   numCandidates: number | null;
                   entityKey:
-                    | {__typename: 'AssetCheckhandle'}
+                    | {
+                        __typename: 'AssetCheckhandle';
+                        name: string;
+                        assetKey: {__typename: 'AssetKey'; path: Array<string>};
+                      }
                     | {__typename: 'AssetKey'; path: Array<string>};
                 }
               | {
@@ -1004,7 +1060,11 @@ export type GetEvaluationsQuery = {
                       }
                   >;
                   entityKey:
-                    | {__typename: 'AssetCheckhandle'}
+                    | {
+                        __typename: 'AssetCheckhandle';
+                        name: string;
+                        assetKey: {__typename: 'AssetKey'; path: Array<string>};
+                      }
                     | {__typename: 'AssetKey'; path: Array<string>};
                 }
               | {
@@ -1016,7 +1076,11 @@ export type GetEvaluationsQuery = {
                   uniqueId: string;
                   childUniqueIds: Array<string>;
                   entityKey:
-                    | {__typename: 'AssetCheckhandle'}
+                    | {
+                        __typename: 'AssetCheckhandle';
+                        name: string;
+                        assetKey: {__typename: 'AssetKey'; path: Array<string>};
+                      }
                     | {__typename: 'AssetKey'; path: Array<string>};
                   metadataEntries: Array<
                     | {
@@ -1217,7 +1281,11 @@ export type GetEvaluationsQuery = {
             childUniqueIds: Array<string>;
             operatorType: string;
             entityKey:
-              | {__typename: 'AssetCheckhandle'}
+              | {
+                  __typename: 'AssetCheckhandle';
+                  name: string;
+                  assetKey: {__typename: 'AssetKey'; path: Array<string>};
+                }
               | {__typename: 'AssetKey'; path: Array<string>};
           }>;
         }>;
@@ -1263,7 +1331,11 @@ export type GetSlimEvaluationsQuery = {
                   childUniqueIds: Array<string>;
                   numCandidates: number | null;
                   entityKey:
-                    | {__typename: 'AssetCheckhandle'}
+                    | {
+                        __typename: 'AssetCheckhandle';
+                        name: string;
+                        assetKey: {__typename: 'AssetKey'; path: Array<string>};
+                      }
                     | {__typename: 'AssetKey'; path: Array<string>};
                 }
               | {
@@ -1456,7 +1528,11 @@ export type GetSlimEvaluationsQuery = {
                       }
                   >;
                   entityKey:
-                    | {__typename: 'AssetCheckhandle'}
+                    | {
+                        __typename: 'AssetCheckhandle';
+                        name: string;
+                        assetKey: {__typename: 'AssetKey'; path: Array<string>};
+                      }
                     | {__typename: 'AssetKey'; path: Array<string>};
                 }
               | {
@@ -1468,7 +1544,11 @@ export type GetSlimEvaluationsQuery = {
                   uniqueId: string;
                   childUniqueIds: Array<string>;
                   entityKey:
-                    | {__typename: 'AssetCheckhandle'}
+                    | {
+                        __typename: 'AssetCheckhandle';
+                        name: string;
+                        assetKey: {__typename: 'AssetKey'; path: Array<string>};
+                      }
                     | {__typename: 'AssetKey'; path: Array<string>};
                   metadataEntries: Array<
                     | {
@@ -1669,7 +1749,11 @@ export type GetSlimEvaluationsQuery = {
             childUniqueIds: Array<string>;
             operatorType: string;
             entityKey:
-              | {__typename: 'AssetCheckhandle'}
+              | {
+                  __typename: 'AssetCheckhandle';
+                  name: string;
+                  assetKey: {__typename: 'AssetKey'; path: Array<string>};
+                }
               | {__typename: 'AssetKey'; path: Array<string>};
           }>;
         }>;
@@ -1700,7 +1784,11 @@ export type GetEvaluationsSpecificPartitionQuery = {
           childUniqueIds: Array<string>;
           numCandidates: number | null;
           entityKey:
-            | {__typename: 'AssetCheckhandle'}
+            | {
+                __typename: 'AssetCheckhandle';
+                name: string;
+                assetKey: {__typename: 'AssetKey'; path: Array<string>};
+              }
             | {__typename: 'AssetKey'; path: Array<string>};
         }
       | {
@@ -1883,7 +1971,11 @@ export type GetEvaluationsSpecificPartitionQuery = {
               }
           >;
           entityKey:
-            | {__typename: 'AssetCheckhandle'}
+            | {
+                __typename: 'AssetCheckhandle';
+                name: string;
+                assetKey: {__typename: 'AssetKey'; path: Array<string>};
+              }
             | {__typename: 'AssetKey'; path: Array<string>};
         }
       | {
@@ -1895,7 +1987,11 @@ export type GetEvaluationsSpecificPartitionQuery = {
           uniqueId: string;
           childUniqueIds: Array<string>;
           entityKey:
-            | {__typename: 'AssetCheckhandle'}
+            | {
+                __typename: 'AssetCheckhandle';
+                name: string;
+                assetKey: {__typename: 'AssetKey'; path: Array<string>};
+              }
             | {__typename: 'AssetKey'; path: Array<string>};
           metadataEntries: Array<
             | {
@@ -2102,10 +2198,10 @@ export type GetAssetEvaluationDetailsQuery = {
   }>;
 };
 
-export const GetEvaluationsQueryVersion = '311ea2f042cf8c001cd7b3db3cc017a2b6b23478229305c57d9ddb2c0d1a546d';
+export const GetEvaluationsQueryVersion = '449a4c36e6e37403690d511798d88dab589e7e62d8b2936e3a51885ce36e746e';
 
-export const GetSlimEvaluationsQueryVersion = '1c35c737bc0dd4be3f0e8b98ee745c388f0ed80529a13c7cc8536cd5b06f37cc';
+export const GetSlimEvaluationsQueryVersion = '4fa60d5712b08b1def579eab4ba7910cee5f689b0bf9db1deffc3c8fef3fa05b';
 
-export const GetEvaluationsSpecificPartitionQueryVersion = 'c7d54f1add2dd8408fb2c57a78dec2c568f5395c3e18203c25122c1d7338a126';
+export const GetEvaluationsSpecificPartitionQueryVersion = '67eb1cb68b8e2781ae83ed247a2a765a0e888d334410839611284a1456652b27';
 
 export const GetAssetEvaluationDetailsQueryVersion = 'd4538f5b4ae52ff2694f9ad6cb6e18fa265e4448107185fbc0601054064c9633';

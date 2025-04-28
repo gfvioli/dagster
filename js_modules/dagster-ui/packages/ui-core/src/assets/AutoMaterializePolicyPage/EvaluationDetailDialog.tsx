@@ -29,6 +29,8 @@ import {DEFAULT_TIME_FORMAT} from '../../app/time/TimestampFormat';
 import {RunsFeedTableWithFilters} from '../../runs/RunsFeedTable';
 import {TimestampDisplay} from '../../schedules/TimestampDisplay';
 import {AnchorButton} from '../../ui/AnchorButton';
+import { EntityKey } from 'shared/graphql/types';
+import { buildEntityKey } from './flattenEvaluations';
 
 export type Tab = 'evaluation' | 'runs';
 
@@ -135,6 +137,7 @@ const EvaluationDetailDialogContents = ({
   const {partitions: allPartitions, loading: partitionsLoading} =
     usePartitionsForAssetKey(assetKeyPath);
 
+  const entityKey = buildEntityKey(assetKeyPath, assetCheckName);
   const viewAllPath = useMemo(() => {
     // todo dish: I don't think the asset check evaluations list is permalinkable yet.
     if (assetCheckName) {
@@ -220,7 +223,7 @@ const EvaluationDetailDialogContents = ({
       return (
         <QueryfulEvaluationDetailTable
           evaluation={evaluation}
-          assetKeyPath={assetKeyPath}
+          entityKey={entityKey}
           selectedPartition={selectedPartition}
           setSelectedPartition={setSelectedPartition}
           pushHistory={pushHistory}
