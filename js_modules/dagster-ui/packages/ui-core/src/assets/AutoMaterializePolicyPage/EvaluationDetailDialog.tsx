@@ -40,6 +40,7 @@ interface Props {
   assetCheckName?: string;
   evaluationID: string;
   initialTab?: Tab;
+  showEvaluationsButton?: boolean;
 }
 
 export const EvaluationDetailDialog = ({
@@ -49,6 +50,7 @@ export const EvaluationDetailDialog = ({
   assetKeyPath,
   assetCheckName,
   initialTab = 'evaluation',
+  showEvaluationsButton = true,
 }: Props) => {
   return (
     <Dialog isOpen={isOpen} onClose={onClose} style={EvaluationDetailDialogStyle}>
@@ -58,6 +60,7 @@ export const EvaluationDetailDialog = ({
         initialAssetCheckName={assetCheckName}
         onClose={onClose}
         initialTab={initialTab}
+        showEvaluationsButton={showEvaluationsButton}
       />
     </Dialog>
   );
@@ -69,6 +72,7 @@ interface ContentProps {
   initialAssetCheckName?: string;
   onClose: () => void;
   initialTab?: Tab;
+  showEvaluationsButton?: boolean;
 }
 
 const EvaluationDetailDialogContents = ({
@@ -77,6 +81,7 @@ const EvaluationDetailDialogContents = ({
   initialAssetCheckName,
   onClose,
   initialTab = 'evaluation',
+  showEvaluationsButton = true,
 }: ContentProps) => {
   const [selectedPartition, setSelectedPartition] = useState<string | null>(null);
   const [tabId, setTabId] = useState<Tab>(initialTab);
@@ -274,8 +279,12 @@ const EvaluationDetailDialogContents = ({
       }
       body={body()}
       viewAllButton={
-        viewAllPath ? (
-          <AnchorButton to={viewAllPath} icon={<Icon name="automation_condition" />}>
+        showEvaluationsButton && viewAllPath ? (
+          <AnchorButton
+            to={viewAllPath}
+            icon={<Icon name="automation_condition" />}
+            onClick={(e) => e.stopPropagation()}
+          >
             View evaluations for this asset
           </AnchorButton>
         ) : null
