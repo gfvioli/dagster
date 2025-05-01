@@ -88,6 +88,7 @@ from dagster._serdes import ConfigurableClass
 from dagster._streamline.asset_check_health import AssetCheckHealthState
 from dagster._time import datetime_from_timestamp, get_current_datetime, get_current_timestamp
 from dagster._streamline.asset_freshness_health import AssetFreshnessHealthState
+from dagster._streamline.lastest_materialization_state import AssetLatestMaterializationState
 from dagster._time import get_current_datetime, get_current_timestamp
 from dagster._utils import PrintFn, is_uuid, traced
 from dagster._utils.error import serializable_error_info_from_exc_info
@@ -3558,4 +3559,9 @@ class DagsterInstance(DynamicPartitionsStore):
     def get_asset_freshness_health_state_for_asset(
         self, asset_key: AssetKey
     ) -> Optional[AssetFreshnessHealthState]:
+        return None
+
+    def get_asset_latest_materialization_state_for_asset(
+        self, asset_key: AssetKey
+    ) -> Optional[AssetLatestMaterializationState]:
         return None
