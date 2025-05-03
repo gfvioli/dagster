@@ -7,6 +7,8 @@ from dagster._core.definitions.definitions_class import Definitions
 from dagster._core.definitions.resource_annotation import ResourceParam
 from dagster.components.component.component import Component
 from dagster.components.core.context import ComponentLoadContext
+from dagster.components.resolved.base import Resolvable
+from dagster.components.resolved.model import Model
 from dagster.components.testing import component_asset
 
 
@@ -45,3 +47,28 @@ def test_asset_with_resources() -> None:
 
     assert isinstance(an_asset, AssetsDefinition)
     assert an_asset() == "foo"
+
+
+def test_components_with_declaration():
+    class ComponentWithDeclaration(Component, Model, Resolvable):
+        value: str
+
+        def build_defs(self, context: ComponentLoadContext) -> Definitions:
+            @asset
+            def an_asset() -> str:
+                return self.value
+
+            return Definitions([an_asset])
+
+    assert (
+        component_asset(component=ComponentWithDeclaration(value="bar"), asset_key="an_asset")()
+        == "bar"
+    )
+
+    assert (
+        component_asset(
+            component=ComponentWithDeclaration.from_dict(attributes={"value": "foobar"}),
+            asset_key="an_asset",
+        )()
+        == "foobar"
+    )
