@@ -1,3 +1,5 @@
+"""Components testing utilities."""
+
 from dagster_test.components.all_metadata_empty_asset import (
     AllMetadataEmptyComponent as AllMetadataEmptyComponent,
 )
