@@ -6,13 +6,12 @@ from dagster._core.definitions.assets import AssetsDefinition
 from dagster._core.definitions.decorators.asset_decorator import asset
 from dagster._core.definitions.definitions_class import Definitions
 from dagster._core.definitions.resource_annotation import ResourceParam
+from dagster._core.execution.context.invocation import build_asset_context
 from dagster.components.component.component import Component
 from dagster.components.core.context import ComponentLoadContext
-from dagster.components.core.defs_module import load_yaml_component_from_path
 from dagster.components.resolved.base import Resolvable
 from dagster.components.resolved.model import Model
-from dagster.components.testing import component_asset
-from dagster_test.components.simple_asset import SimpleAssetComponent
+from dagster.components.testing import component_asset, defs_from_component_yaml_path
 
 
 def test_basic_test() -> None:
@@ -79,8 +78,5 @@ def test_components_with_declaration():
 
 def test_component_on_disk():
     path = Path(__file__).parent / "some_value_simple_asset_component.yaml"
-    component = load_yaml_component_from_path(
-        context=ComponentLoadContext.for_test(), component_def_path=path
-    )
-
-    assert isinstance(component, SimpleAssetComponent)
+    assets_def = defs_from_component_yaml_path(component_yaml=path).get_assets_def("an_asset")
+    assert assets_def(context=build_asset_context()) == "some_value"
